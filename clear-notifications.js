@@ -2,12 +2,12 @@ jQuery( document ).ready( function() {
 	
     var jq = jQuery;
 	
-    jq( document ).on( 'click', '#clear-notifications,#wp-admin-bar-clear-notifications a, .header-notifications .pop a:last-child',  function() {
+    jq( document ).on( 'click', '.notification-link,#clear-notifications,#wp-admin-bar-clear-notifications a, .header-notifications .pop a:last-child',  function() {
         var $this = jq( this );
 		
         var nonce = get_var_in_url( $this.attr( 'href' ), '_wpnonce' );
 		
-        $this.text( 'clearing...' );//bad idea as localization problem
+        // $this.text( 'clearing...' ); // Bad idea as localization problem
 		
         jq.post( ajaxurl, {
 							action:		'bpcn_clear_notifications',
@@ -26,11 +26,13 @@ jQuery( document ).ready( function() {
 
 								// It is a temporary solution but the boss theme has really messed up notification drop down.
 								// It is not possible to identify the link for clearing.
-								jq('.header-notifications').find('.pop').remove();
-								jq('.header-notifications').find('#ab-pending-notifications').remove();
+								// jq('.header-notifications').find('.pop').remove();
+								// jq('.header-notifications').find('#ab-pending-notifications').remove();
 								//remove all notifications
 
-								$this.remove();//in case someone has used it somewhere else
+								// $this.remove(); // in case someone has used it somewhere else
+								
+								jq('.notification-wrap span.count').remove();
 
 							}
 						}
@@ -56,14 +58,14 @@ jQuery( document ).ready( function() {
     
 		var urla = url.split("?");
 		
-		var qvars = urla[1].split("&");//so we hav an arry of name=val,name=val
+		var qvars = urla[1].split("&"); // so we hav an array of name=val,name=val
 		for(var i = 0; i < qvars.length; i++ ) {
 			
 			var qv = qvars[i].split("=");
 			
 			if( qv[0] === name ) {
-                return qv[1];
-            }
+        return qv[1];
+      }
 		}
       
 		return '';
